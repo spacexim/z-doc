@@ -10,12 +10,13 @@ import TextStyle from "@tiptap/extension-text-style";
 import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
 import Underline from "@tiptap/extension-underline";
+import { Color } from "@tiptap/extension-color";
+import Highlight from "@tiptap/extension-highlight";
 import Image from "@tiptap/extension-image";
 import ImageResize from "tiptap-extension-resize-image";
 import StarterKit from "@tiptap/starter-kit";
 
 import { useEditorStore } from "@/store/use-editor-store";
-import { set } from "date-fns";
 
 export const Editor = () => {
   const { setEditor } = useEditorStore();
@@ -50,6 +51,11 @@ export const Editor = () => {
     },
     extensions: [
       StarterKit,
+      Color,
+      Highlight.configure({
+        multicolor: true,
+      }),
+
       FontFamily,
       TextStyle,
       Underline,
