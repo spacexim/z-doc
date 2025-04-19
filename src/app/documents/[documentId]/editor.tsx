@@ -13,6 +13,7 @@ import Underline from "@tiptap/extension-underline";
 import { Color } from "@tiptap/extension-color";
 import Highlight from "@tiptap/extension-highlight";
 import Image from "@tiptap/extension-image";
+import Link from "@tiptap/extension-link";
 import ImageResize from "tiptap-extension-resize-image";
 import StarterKit from "@tiptap/starter-kit";
 
@@ -51,6 +52,11 @@ export const Editor = () => {
     },
     extensions: [
       StarterKit,
+      Link.configure({
+        openOnClick: false,
+        autolink: true,
+        defaultProtocol: "https",
+      }),
       Color,
       Highlight.configure({
         multicolor: true,
