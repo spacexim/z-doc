@@ -114,10 +114,10 @@ const ImageButton = () => {
               }
             }}
           />
+          <DialogFooter>
+            <Button onClick={handleImageUrlSubmit}>Insert</Button>
+          </DialogFooter>
         </DialogContent>
-        <DialogFooter>
-          <Button onClick={handleImageUrlSubmit}>Insert</Button>
-        </DialogFooter>
       </Dialog>
     </>
   );
