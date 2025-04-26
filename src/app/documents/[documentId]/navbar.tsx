@@ -37,7 +37,6 @@ import {
 } from "lucide-react";
 import { BsFilePdf } from "react-icons/bs";
 import { useEditorStore } from "@/store/use-editor-store";
-import { on } from "events";
 
 export const Navbar = () => {
   const { editor } = useEditorStore();
