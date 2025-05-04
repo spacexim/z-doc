@@ -28,12 +28,11 @@ export async function POST(req: Request) {
 
   const isOwner = document.ownerId === user.id;
   const isOrgMember = !!(
-    document.organizationId &&
-    document.organizationId === (sessionClaims.o as { id: string }).id
+    document.organizationId && document.organizationId === sessionClaims.o.id
   );
 
   if (!isOwner && !isOrgMember) {
-    return new Response("Unauthorized4", { status: 401 });
+    return new Response("Unauthorized404", { status: 401 });
   }
 
   const name =

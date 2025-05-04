@@ -13,13 +13,11 @@ export async function getDocuments(ids: Id<"documents">[]) {
 }
 
 export async function getUsers() {
-  const { sessionClaims } = (await auth()) as {
-    sessionClaims: { o?: { id: string } };
-  };
+  const { sessionClaims } = await auth();
   const clerk = await clerkClient();
 
   const response = await clerk.users.getUserList({
-    organizationId: [sessionClaims?.o?.id ?? ""],
+    organizationId: [sessionClaims?.o.id ?? ""],
   });
 
   const users = response.data.map((user) => {
