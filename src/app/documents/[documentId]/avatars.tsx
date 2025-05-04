@@ -18,6 +18,7 @@ const AvatarStack = () => {
   const currentuUser = useSelf();
 
   if (users.length === 0) return null;
+
   return (
     <>
       <div className="flex items-center">

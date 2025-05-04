@@ -13,8 +13,6 @@ import { useRouter } from "next/navigation";
 import { useMutation } from "convex/react";
 import { useState } from "react";
 import { api } from "../../../convex/_generated/api";
-import { title } from "process";
-import { on } from "events";
 import { toast } from "sonner";
 
 export const TemplatesGallery = () => {
@@ -56,7 +54,9 @@ export const TemplatesGallery = () => {
                 >
                   <button
                     disabled={isCreating}
-                    onClick={() => onTemplateClick(template.label, "")}
+                    onClick={() =>
+                      onTemplateClick(template.label, template.initialContent)
+                    }
                     style={{
                       backgroundImage: `url(${template.imageUrl})`,
                       backgroundSize: "cover",

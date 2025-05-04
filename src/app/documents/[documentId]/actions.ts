@@ -13,11 +13,13 @@ export async function getDocuments(ids: Id<"documents">[]) {
 }
 
 export async function getUsers() {
-  const { sessionClaims } = await auth();
+  const { sessionClaims } = (await auth()) as {
+    sessionClaims: { o?: { id: string } };
+  };
   const clerk = await clerkClient();
 
   const response = await clerk.users.getUserList({
-    organizationId: [sessionClaims?.o.id as string],
+    organizationId: [sessionClaims?.o?.id ?? ""],
   });
 
   const users = response.data.map((user) => {
@@ -26,6 +28,7 @@ export async function getUsers() {
       name:
         user.fullName ?? user.primaryEmailAddress?.emailAddress ?? "Anonymous",
       avatar: user.imageUrl,
+      color: "",
     };
   });
   return users;

@@ -14,7 +14,6 @@ import {
 import { Id } from "../../../convex/_generated/dataModel";
 import { RemoveDialog } from "@/components/remove-dialog";
 import { RenameDialog } from "@/components/rename-diglog";
-import { on } from "events";
 
 interface DocumentMenuProps {
   documentId: Id<"documents">;
