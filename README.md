@@ -21,6 +21,7 @@
 ## 📝 项目简介
 
 Z-Doc 是一个实时协作文档编辑平台，为团队和个人提供类似 Google Docs 的使用体验。通过 Z-Doc，用户可以创建、编辑和共享各种文档，并支持多人实时协作，完美适合团队项目、学术研究或个人知识管理。
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/spacexim/z-doc)
 
 ### ✨ 核心特性
 
