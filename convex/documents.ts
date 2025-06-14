@@ -178,3 +178,59 @@ export const getById = query({
     return document;
   },
 });
+
+export const getCount = query({
+  args: {
+    search: v.optional(v.string()),
+  },
+  handler: async (ctx, { search }) => {
+    const user = await ctx.auth.getUserIdentity();
+
+    if (!user) {
+      throw new ConvexError("User not authenticated");
+    }
+
+    const organizationId = (user.organization_id ?? undefined) as
+      | string
+      | undefined;
+
+    let documents;
+
+    // If the user is part of an organization, we want to search for documents
+    if (search && organizationId) {
+      documents = await ctx.db
+        .query("documents")
+        .withSearchIndex("search_title", (q) =>
+          q.search("title", search).eq("organizationId", organizationId)
+        )
+        .collect();
+    }
+    // If the user is not part of an organization, we want to search for documents
+    else if (search) {
+      documents = await ctx.db
+        .query("documents")
+        .withSearchIndex("search_title", (q) =>
+          q.search("title", search).eq("ownerId", user.subject)
+        )
+        .collect();
+    }
+    // If the user is part of an organization, we want to get all documents for that organization
+    else if (organizationId) {
+      documents = await ctx.db
+        .query("documents")
+        .withIndex("by_organization_id", (q) =>
+          q.eq("organizationId", organizationId)
+        )
+        .collect();
+    }
+    // Get documents for the user
+    else {
+      documents = await ctx.db
+        .query("documents")
+        .withIndex("by_owner_id", (q) => q.eq("ownerId", user.subject))
+        .collect();
+    }
+
+    return documents.length;
+  },
+});

@@ -60,7 +60,7 @@ const InboxMenu = () => {
             </InboxNotificationList>
           ) : (
             <div className="p-2 w-[400px] text-center text-sm to-muted-foreground">
-              No notifications
+              暂无通知
             </div>
           )}
         </DropdownMenuContent>

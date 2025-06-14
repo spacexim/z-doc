@@ -27,21 +27,19 @@ export const RemoveDialog = ({ documentId, children }: RemoveDialogProps) => {
   const router = useRouter();
   const remove = useMutation(api.documents.removeById);
   const [isRemoving, setIsRemoving] = useState(false);
-
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent onClick={(e) => e.stopPropagation()}>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+          <AlertDialogTitle>确定要删除吗？</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete the
-            document.
+            此操作无法撤销。这将永久删除该文档。
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={(e) => e.stopPropagation()}>
-            Cancel
+            取消
           </AlertDialogCancel>
           <AlertDialogAction
             disabled={isRemoving}
@@ -50,9 +48,9 @@ export const RemoveDialog = ({ documentId, children }: RemoveDialogProps) => {
               setIsRemoving(true);
 
               remove({ id: documentId })
-                .catch(() => toast.error("Something went wrong"))
+                .catch(() => toast.error("操作失败"))
                 .then(() => {
-                  toast.success("Document removed");
+                  toast.success("文档已删除");
                   router.push("/");
                 })
                 .finally(() => {
@@ -61,7 +59,7 @@ export const RemoveDialog = ({ documentId, children }: RemoveDialogProps) => {
             }}
             className="bg-red-500 hover:bg-red-600"
           >
-            Delete
+            删除
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

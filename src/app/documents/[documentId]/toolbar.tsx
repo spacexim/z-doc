@@ -58,11 +58,11 @@ const LineHeightButton = () => {
 
   const lineHeights = [
     {
-      label: "Default",
+      label: "默认",
       value: "normal",
     },
     {
-      label: "Single",
+      label: "单倍行距",
       value: "1",
     },
     {
@@ -74,7 +74,7 @@ const LineHeightButton = () => {
       value: "1.5",
     },
     {
-      label: "Double",
+      label: "双倍行距",
       value: "2",
     },
   ];
@@ -82,7 +82,10 @@ const LineHeightButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+        <button
+          className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm"
+          title="行高"
+        >
           <ListCollapseIcon className="size-4" />
         </button>
       </DropdownMenuTrigger>
@@ -154,11 +157,11 @@ const FontSizeButton = () => {
       updateFontSize(newSize.toString());
     }
   };
-
   return (
     <div className="flex items-center gap-x-0.5">
       <button
         onClick={decrement}
+        title="减小字体"
         className="h-7 w-7 shrink-0 flex items-center justify-center rounded-sm hover:bg-neutral-200/80"
       >
         <MinusIcon className="size-4" />
@@ -178,6 +181,7 @@ const FontSizeButton = () => {
             setIsEditing(true);
             setFontSize(currentFontSize);
           }}
+          title="字体大小"
           className="h-7 w-10 text-sm text-center border border-neutral-400 rounded-sm hover:bg-neutral-200/80"
         >
           {currentFontSize}
@@ -185,6 +189,7 @@ const FontSizeButton = () => {
       )}
       <button
         onClick={increment}
+        title="增大字体"
         className="h-7 w-7 shrink-0 flex items-center justify-center rounded-sm hover:bg-neutral-200/80"
       >
         <PlusIcon className="size-4" />
@@ -198,13 +203,13 @@ const ListButton = () => {
 
   const lists = [
     {
-      label: "Bullet List",
+      label: "无序列表",
       icon: ListIcon,
       isActive: () => editor?.isActive("bulletList"),
       onClick: () => editor?.chain().focus().toggleBulletList().run(),
     },
     {
-      label: "Ordered List",
+      label: "有序列表",
       icon: ListOrderedIcon,
       isActive: () => editor?.isActive("orderedList"),
       onClick: () => editor?.chain().focus().toggleOrderedList().run(),
@@ -214,7 +219,10 @@ const ListButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+        <button
+          className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm"
+          title="列表"
+        >
           <ListIcon className="size-4" />
         </button>
       </DropdownMenuTrigger>
@@ -242,48 +250,52 @@ const AlignButton = () => {
 
   const alignments = [
     {
-      label: "Aling Left",
+      label: "左对齐",
       value: "left",
       icon: AlignLeftIcon,
     },
     {
-      label: "Align Center",
+      label: "居中对齐",
       value: "center",
       icon: AlignCenterIcon,
     },
     {
-      label: "Align Right",
+      label: "右对齐",
       value: "right",
       icon: AlignRightIcon,
     },
     {
-      label: "Align Justify",
+      label: "两端对齐",
       value: "justify",
       icon: AlignJustifyIcon,
     },
   ];
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+        <button
+          className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm"
+          title="文本对齐"
+        >
           <AlignLeftIcon className="size-4" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="p-1 flex flex-col gap-y-1">
-        {alignments.map(({ label, value, icon: Icon }) => (
-          <button
-            key={value}
-            onClick={() => editor?.chain().focus().setTextAlign(value).run()}
-            className={cn(
-              "flex items-center gap-x-2 px-2 py-1 rounded-sm hover:bg-neutral-200/80",
-              editor?.isActive({ textAlign: value }) && "bg-neutral-200/80"
-            )}
-          >
-            <Icon className="size-4" />
-            <span className="text-sm">{label}</span>
-          </button>
-        ))}
+      <DropdownMenuContent className="p-1">
+        <div className="flex items-center gap-x-1">
+          {alignments.map(({ label, value, icon: Icon }) => (
+            <button
+              key={value}
+              onClick={() => editor?.chain().focus().setTextAlign(value).run()}
+              className={cn(
+                "flex items-center justify-center w-8 h-8 rounded-sm hover:bg-neutral-200/80",
+                editor?.isActive({ textAlign: value }) && "bg-neutral-200/80"
+              )}
+              title={label}
+            >
+              <Icon className="size-4" />
+            </button>
+          ))}
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );
@@ -326,29 +338,30 @@ const ImageButton = () => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+          <button
+            className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm"
+            title="插入图片"          >
             <ImageIcon className="size-4" />
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem onClick={onUpload}>
             <UploadIcon className="size-4 mr-2" />
-            Upload
+            上传
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setIsDialogOpen(true)}>
             <SearchIcon className="size-4 mr-2" />
-            Paste image url
+            粘贴图片链接
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>        <DialogContent>
           <DialogHeader>
-            <DialogTitle>Insert image URL</DialogTitle>
+            <DialogTitle>插入图片链接</DialogTitle>
           </DialogHeader>
           <Input
-            placeholder="Inser image URL"
+            placeholder="输入图片链接地址"
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
             onKeyDown={(e) => {
@@ -358,7 +371,7 @@ const ImageButton = () => {
             }}
           />
           <DialogFooter>
-            <Button onClick={handleImageUrlSubmit}>Insert</Button>
+            <Button onClick={handleImageUrlSubmit}>插入</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -385,17 +398,20 @@ const LinkButton = () => {
       }}
     >
       <DropdownMenuTrigger asChild>
-        <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+        <button
+          className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm"
+          title="插入链接"
+        >
           <Link2Icon className="size-4" />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="p-2.5 flex items-center gap-x-2">
         <Input
-          placeholder="https://example.com"
+          placeholder="输入链接地址"
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
-        <Button onClick={() => onChange(value)}>Apply</Button>
+        <Button onClick={() => onChange(value)}>应用</Button>
       </DropdownMenuContent>
     </DropdownMenu>
   );
@@ -413,7 +429,10 @@ const HighlightColorButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+        <button
+          className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm"
+          title="高亮颜色"
+        >
           <HighlighterIcon className="size-4" />
         </button>
       </DropdownMenuTrigger>
@@ -436,7 +455,10 @@ const TextColorButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+        <button
+          className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm"
+          title="文字颜色"
+        >
           <span className="text-xs">A</span>
           <div className="h-0.5 w-full" style={{ backgroundColor: value }} />
         </button>
@@ -452,28 +474,30 @@ const HeadingLevelButton = () => {
   const { editor } = useEditorStore();
 
   const headings = [
-    { label: "Normal text", value: 0, fontSize: "16px" },
-    { label: "Heading 1", value: 1, fontSize: "32px" },
-    { label: "Heading 2", value: 2, fontSize: "24px" },
-    { label: "Heading 3", value: 3, fontSize: "20px" },
-    { label: "Heading 4", value: 4, fontSize: "18px" },
-    { label: "Heading 5", value: 5, fontSize: "16px" },
+    { label: "普通文本", value: 0, fontSize: "16px" },
+    { label: "标题 1", value: 1, fontSize: "32px" },
+    { label: "标题 2", value: 2, fontSize: "24px" },
+    { label: "标题 3", value: 3, fontSize: "20px" },
+    { label: "标题 4", value: 4, fontSize: "18px" },
+    { label: "标题 5", value: 5, fontSize: "16px" },
   ];
-
   const getCurrentHeading = () => {
     for (let level = 1; level <= 5; level++) {
       if (editor?.isActive("heading", { level })) {
-        return `Heading ${level}`;
+        return `标题 ${level}`;
       }
     }
 
-    return "Normal text";
+    return "普通文本";
   };
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="h-7 min-w-7 shrink-0 flex items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+        <button
+          className="h-7 min-w-7 shrink-0 flex items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm"
+          title="标题级别"
+        >
           <span className="truncate">{getCurrentHeading()}</span>
           <ChevronDownIcon className="ml-2 size-4 shrink-0" />
         </button>
@@ -523,7 +547,10 @@ const FontFamilyButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="h-7 w-[120px] shrink-0 flex items-center justify-between rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+        <button
+          className="h-7 w-[120px] shrink-0 flex items-center justify-between rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm"
+          title="字体"
+        >
           <span className="truncate">
             {editor?.getAttributes("textstyle").fontFamily || "Arial"}
           </span>
@@ -554,18 +581,21 @@ interface ToolbarButtonProps {
   onClick?: () => void;
   isActive?: boolean;
   icon: LucideIcon;
+  title?: string;
 }
 
 const ToolbarButton = ({
   onClick,
   isActive,
   icon: Icon,
+  title,
 }: ToolbarButtonProps) => {
   return (
     <button
       onClick={onClick}
+      title={title}
       className={cn(
-        "text-sm h-7 min-w-7 flex items-center justify-center rounded-sm hpver:bg-neutral-200/80",
+        "text-sm h-7 min-w-7 flex items-center justify-center rounded-sm hover:bg-neutral-200/80",
         isActive && "bg-neutral-200/80"
       )}
     >
@@ -578,7 +608,6 @@ export const Toolbar = () => {
   const { editor } = useEditorStore();
 
   console.log("Toolbar editor: ", { editor });
-
   const sections: {
     label: string;
     icon: LucideIcon;
@@ -587,17 +616,17 @@ export const Toolbar = () => {
   }[][] = [
     [
       {
-        label: "Undo",
+        label: "撤销",
         icon: Undo2Icon,
         onClick: () => editor?.chain().focus().undo().run(),
       },
       {
-        label: "Redo",
+        label: "重做",
         icon: Redo2Icon,
         onClick: () => editor?.chain().focus().redo().run(),
       },
       {
-        label: "Print",
+        label: "打印",
         icon: PrinterIcon,
         onClick: () => window.print(),
       },
@@ -615,19 +644,19 @@ export const Toolbar = () => {
     ],
     [
       {
-        label: "Bold",
+        label: "粗体",
         icon: BoldIcon,
         isActive: editor?.isActive("bold"),
         onClick: () => editor?.chain().focus().toggleBold().run(),
       },
       {
-        label: "Italic",
+        label: "斜体",
         icon: ItalicIcon,
         isActive: editor?.isActive("italic"),
         onClick: () => editor?.chain().focus().toggleItalic().run(),
       },
       {
-        label: "Underline",
+        label: "下划线",
         icon: UnderlineIcon,
         isActive: editor?.isActive("underline"),
         onClick: () => editor?.chain().focus().toggleUnderline().run(),
@@ -635,19 +664,13 @@ export const Toolbar = () => {
     ],
     [
       {
-        label: "Comment",
-        icon: MessageSquarePlusIcon,
-        onClick: () => editor?.chain().focus().addPendingComment().run(),
-        isActive: editor?.isActive("liveblocksCommentMark"),
-      },
-      {
-        label: "List Todo",
+        label: "待办列表",
         icon: ListTodoIcon,
         onClick: () => editor?.chain().focus().toggleTaskList().run(),
         isActive: editor?.isActive("taskList"),
       },
       {
-        label: "Remove Formatting",
+        label: "清除格式",
         icon: RemoveFormattingIcon,
         onClick: () => editor?.chain().focus().unsetAllMarks().run(),
       },
@@ -656,7 +679,7 @@ export const Toolbar = () => {
   return (
     <div className="bg-[#F1F4F9] px-2.5 py-0.5 rounded-[24px] min-h-[40px] flex items-center gap-x-0.5 overflow-x-auto">
       {sections[0].map((item) => (
-        <ToolbarButton key={item.label} {...item} />
+        <ToolbarButton key={item.label} title={item.label} {...item} />
       ))}
       <Separator orientation="vertical" className="h-6 bg-neutral-300" />
       <FontFamilyButton />
@@ -664,20 +687,26 @@ export const Toolbar = () => {
       <HeadingLevelButton />
       <Separator orientation="vertical" className="h-6 bg-neutral-300" />
       <FontSizeButton />
-      <Separator orientation="vertical" className="h-6 bg-neutral-300" />
-      {sections[1].map((item) => (
-        <ToolbarButton key={item.label} {...item} />
+      <Separator orientation="vertical" className="h-6 bg-neutral-300" />      {sections[1].map((item) => (
+        <ToolbarButton key={item.label} title={item.label} {...item} />
       ))}
       <TextColorButton />
       <HighlightColorButton />
       <Separator orientation="vertical" className="h-6 bg-neutral-300" />
       <LinkButton />
       <ImageButton />
+      <ToolbarButton
+        icon={MessageSquarePlusIcon}
+        title="添加评论"
+        onClick={() => editor?.chain().focus().addPendingComment().run()}
+        isActive={editor?.isActive("liveblocksCommentMark")}
+      />
+      <Separator orientation="vertical" className="h-6 bg-neutral-300" />
       <AlignButton />
       <LineHeightButton />
       <ListButton />
       {sections[2].map((item) => (
-        <ToolbarButton key={item.label} {...item} />
+        <ToolbarButton key={item.label} title={item.label} {...item} />
       ))}
     </div>
   );

@@ -57,15 +57,14 @@ export const Navbar = ({ data }: NavbarProps) => {
   const { editor } = useEditorStore();
 
   const mutation = useMutation(api.documents.create);
-
   const onNewDocument = () => {
     mutation({
-      title: "Untitled document",
+      title: "无标题文档",
       initialContent: "",
     })
-      .catch(() => toast.error("Somethingwent wrong"))
+      .catch(() => toast.error("操作失败"))
       .then((id) => {
-        toast.success("Document created");
+        toast.success("文档已创建");
         router.push(`/documents/${id}`);
       });
   };
@@ -121,20 +120,19 @@ export const Navbar = ({ data }: NavbarProps) => {
       <div className="flex gap-2 items-center">
         <Link href="/">
           <Image src="/logo.svg" alt="Logo " width={36} height={36} />
-        </Link>
-        <div className="flex flex-col">
+        </Link>        <div className="flex flex-col">
           <DocumentInput title={data.title} id={data._id} />
           <div className="flex">
             <Menubar className="border-none bg-transparent shadow-none h-auto p-0">
               <MenubarMenu>
                 <MenubarTrigger className="text-sm font-normal py-0.5 px-[7px] rounded-sm hover:bg-muted h-auto">
-                  File
+                  文件
                 </MenubarTrigger>
                 <MenubarContent className="print:hidden">
                   <MenubarSub>
                     <MenubarSubTrigger>
                       <FileIcon className="size-4 mr-2" />
-                      Save
+                      保存
                     </MenubarSubTrigger>
                     <MenubarSubContent>
                       <MenubarItem onClick={onSaveJSON}>
@@ -151,13 +149,13 @@ export const Navbar = ({ data }: NavbarProps) => {
                       </MenubarItem>
                       <MenubarItem onClick={onSaveText}>
                         <FileTextIcon className="size-4 mr-2" />
-                        Text
+                        文本
                       </MenubarItem>
                     </MenubarSubContent>
                   </MenubarSub>
                   <MenubarItem onClick={onNewDocument}>
                     <FilePlusIcon className="size-4 mr-2" />
-                    New Document
+                    新建文档
                   </MenubarItem>
                   <MenubarSeparator />
                   <RenameDialog documentId={data._id} initialTitle={data.title}>
@@ -166,7 +164,7 @@ export const Navbar = ({ data }: NavbarProps) => {
                       onSelect={(e) => e.preventDefault()}
                     >
                       <FilePenIcon className="size-4 mr-2" />
-                      Rename
+                      重命名
                     </MenubarItem>
                   </RenameDialog>
 
@@ -176,7 +174,7 @@ export const Navbar = ({ data }: NavbarProps) => {
                       onSelect={(e) => e.preventDefault()}
                     >
                       <TrashIcon className="size-4 mr-2" />
-                      Remove
+                      删除
                     </MenubarItem>
                   </RemoveDialog>
 
@@ -187,37 +185,37 @@ export const Navbar = ({ data }: NavbarProps) => {
                     }}
                   >
                     <PrinterIcon className="size-4 mr-2" />
-                    Print <MenubarShortcut>Ctrl+P</MenubarShortcut>
+                    打印 <MenubarShortcut>Ctrl+P</MenubarShortcut>
                   </MenubarItem>
                 </MenubarContent>
               </MenubarMenu>
               <MenubarMenu>
                 <MenubarTrigger className="text-sm font-normal py-0.5 px-[7px] rounded-sm hover:bg-muted h-auto">
-                  Edit
+                  编辑
                 </MenubarTrigger>
                 <MenubarContent>
                   <MenubarItem
                     onClick={() => editor?.chain().focus().undo().run()}
                   >
                     <Undo2Icon className="size-4 mr-2" />
-                    Undo <MenubarShortcut>Ctrl+Z</MenubarShortcut>
+                    撤销 <MenubarShortcut>Ctrl+Z</MenubarShortcut>
                   </MenubarItem>
                   <MenubarItem
                     onClick={() => editor?.chain().focus().redo().run()}
                   >
                     <Redo2Icon className="size-4 mr-2" />
-                    Redo <MenubarShortcut>Ctrl+Y</MenubarShortcut>
+                    重做 <MenubarShortcut>Ctrl+Y</MenubarShortcut>
                   </MenubarItem>
                 </MenubarContent>
               </MenubarMenu>
               <MenubarMenu>
                 <MenubarTrigger className="text-sm font-normal py-0.5 px-[7px] rounded-sm hover:bg-muted h-auto">
-                  Insert
+                  插入
                 </MenubarTrigger>
                 <MenubarContent>
                   <MenubarSub>
                     <MenubarSubTrigger>
-                      Table
+                      表格
                       <MenubarSubContent>
                         <MenubarItem
                           onClick={() => insertTable({ rows: 1, cols: 1 })}
@@ -241,18 +239,17 @@ export const Navbar = ({ data }: NavbarProps) => {
                         </MenubarItem>
                       </MenubarSubContent>
                     </MenubarSubTrigger>
-                  </MenubarSub>
-                </MenubarContent>
+                  </MenubarSub>                </MenubarContent>
               </MenubarMenu>
               <MenubarMenu>
                 <MenubarTrigger className="text-sm font-normal py-0.5 px-[7px] rounded-sm hover:bg-muted h-auto">
-                  Format
+                  格式
                 </MenubarTrigger>
                 <MenubarContent>
                   <MenubarSub>
                     <MenubarSubTrigger>
                       <TextIcon className="size-4 mr-2" />
-                      Text
+                      文本
                     </MenubarSubTrigger>
                     <MenubarSubContent>
                       <MenubarItem
@@ -261,7 +258,7 @@ export const Navbar = ({ data }: NavbarProps) => {
                         }
                       >
                         <BoldIcon className="size-4 mr-2" />
-                        Bold
+                        粗体
                       </MenubarItem>
                       <MenubarItem
                         onClick={() =>
@@ -269,7 +266,7 @@ export const Navbar = ({ data }: NavbarProps) => {
                         }
                       >
                         <ItalicIcon className="size-4 mr-2" />
-                        Italic
+                        斜体
                       </MenubarItem>
                       <MenubarItem
                         onClick={() =>
@@ -277,7 +274,7 @@ export const Navbar = ({ data }: NavbarProps) => {
                         }
                       >
                         <UnderlineIcon className="size-4 mr-2" />
-                        Underline
+                        下划线
                       </MenubarItem>
                       <MenubarItem
                         onClick={() =>
@@ -285,7 +282,7 @@ export const Navbar = ({ data }: NavbarProps) => {
                         }
                       >
                         <StrikethroughIcon className="size-4 mr-2" />
-                        Strikethrough
+                        删除线
                       </MenubarItem>
                     </MenubarSubContent>
                   </MenubarSub>
@@ -295,7 +292,7 @@ export const Navbar = ({ data }: NavbarProps) => {
                     }
                   >
                     <RemoveFormattingIcon className="size-4 mr-2" />
-                    Clear formatting
+                    清除格式
                   </MenubarItem>
                 </MenubarContent>
               </MenubarMenu>

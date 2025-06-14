@@ -37,12 +37,12 @@ export const RenameDialog = ({
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsUpdating(true);
-    update({ id: documentId, title: title.trim() || "Untitiled" })
+    update({ id: documentId, title: title.trim() || "无标题" })
       .catch(() => {
-        toast.error("Something went wrong");
+        toast.error("操作失败");
       })
       .then(() => {
-        toast.success("Document updated");
+        toast.success("文档已更新");
       })
       .finally(() => {
         setIsUpdating(false);
@@ -52,20 +52,17 @@ export const RenameDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent onClick={(e) => e.stopPropagation()}>
+      <DialogTrigger asChild>{children}</DialogTrigger>      <DialogContent onClick={(e) => e.stopPropagation()}>
         <form onSubmit={onSubmit}>
           <DialogHeader>
-            <DialogTitle>Rename Document</DialogTitle>
-            <DialogDescription>
-              Enter a new name for this document
-            </DialogDescription>
+            <DialogTitle>重命名文档</DialogTitle>
+            <DialogDescription>为此文档输入新名称</DialogDescription>
           </DialogHeader>
           <div className="my-4">
             <Input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Document name"
+              placeholder="文档名称"
               onClick={(e) => e.stopPropagation()}
             />
           </div>
@@ -79,14 +76,14 @@ export const RenameDialog = ({
                 setOpen(false);
               }}
             >
-              Cancel
+              取消
             </Button>
             <Button
               type="submit"
               disabled={isUpdating}
               onClick={(e) => e.stopPropagation()}
             >
-              Save
+              保存
             </Button>
           </DialogFooter>
         </form>

@@ -29,11 +29,15 @@ export const DocumentMenu = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant={"ghost"} className="rounded-full" size="icon">
-          <MoreVertical className="size-4" />
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8 border-none shadow-none hover:bg-gray-200/50 bg-transparent"
+        >
+          <MoreVertical className="h-4 w-4 text-gray-500" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent align="end" className="w-48">
         <RenameDialog documentId={documentId} initialTitle={title}>
           <DropdownMenuItem
             onSelect={(e) => {
@@ -42,7 +46,7 @@ export const DocumentMenu = ({
             onClick={(e) => e.stopPropagation()}
           >
             <FilePenIcon className="size-4 mr-2" />
-            Rename
+            重命名
           </DropdownMenuItem>
         </RenameDialog>
         <RemoveDialog documentId={documentId}>
@@ -52,13 +56,12 @@ export const DocumentMenu = ({
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <TrashIcon className="size-4 mr-2" />
-            Remove
+            <TrashIcon className="size-4 mr-2" /> 删除
           </DropdownMenuItem>
         </RemoveDialog>
         <DropdownMenuItem onClick={() => onNewTab(documentId)}>
           <ExternalLinkIcon className="size-4 mr-2" />
-          Open in a new tab
+          在新标签页打开
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
