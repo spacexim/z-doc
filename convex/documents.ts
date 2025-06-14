@@ -52,8 +52,16 @@ export const get = query({
   args: {
     paginationOpts: paginationOptsValidator,
     search: v.optional(v.string()),
+    sortBy: v.optional(
+      v.union(
+        v.literal("newest"),
+        v.literal("oldest"),
+        v.literal("name-asc"),
+        v.literal("name-desc")
+      )
+    ),
   },
-  handler: async (ctx, { search, paginationOpts }) => {
+  handler: async (ctx, { search, paginationOpts, sortBy = "newest" }) => {
     const user = await ctx.auth.getUserIdentity();
 
     if (!user) {
@@ -64,7 +72,60 @@ export const get = query({
       | string
       | undefined;
 
-    // If the user is part of an organization, we want to search for documents
+    // For name-based sorting, we need to collect all documents and sort manually
+    if (sortBy === "name-asc" || sortBy === "name-desc") {
+      let documents;
+
+      if (search && organizationId) {
+        documents = await ctx.db
+          .query("documents")
+          .withSearchIndex("search_title", (q) =>
+            q.search("title", search).eq("organizationId", organizationId)
+          )
+          .collect();
+      } else if (search) {
+        documents = await ctx.db
+          .query("documents")
+          .withSearchIndex("search_title", (q) =>
+            q.search("title", search).eq("ownerId", user.subject)
+          )
+          .collect();
+      } else if (organizationId) {
+        documents = await ctx.db
+          .query("documents")
+          .withIndex("by_organization_id", (q) =>
+            q.eq("organizationId", organizationId)
+          )
+          .collect();
+      } else {
+        documents = await ctx.db
+          .query("documents")
+          .withIndex("by_owner_id", (q) => q.eq("ownerId", user.subject))
+          .collect();
+      }
+
+      // Sort by name
+      const sorted = documents.sort((a, b) => {
+        if (sortBy === "name-asc") {
+          return a.title.localeCompare(b.title, "zh-CN");
+        } else {
+          return b.title.localeCompare(a.title, "zh-CN");
+        }
+      });
+
+      // Manual pagination
+      const startIndex = paginationOpts.cursor
+        ? parseInt(paginationOpts.cursor as string)
+        : 0;
+      const endIndex = startIndex + paginationOpts.numItems;
+      return {
+        page: sorted.slice(startIndex, endIndex),
+        isDone: endIndex >= sorted.length,
+        continueCursor: endIndex < sorted.length ? endIndex.toString() : "",
+      };
+    }
+
+    // For time-based sorting, use Convex's built-in ordering
     if (search && organizationId) {
       return await ctx.db
         .query("documents")
@@ -74,9 +135,6 @@ export const get = query({
         .paginate(paginationOpts);
     }
 
-    // console.log({ user });
-
-    // If the user is not part of an organization, we want to search for documents
     if (search) {
       return await ctx.db
         .query("documents")
@@ -86,20 +144,29 @@ export const get = query({
         .paginate(paginationOpts);
     }
 
-    // If the user is part of an organization, we want to get all documents for that organization
     if (organizationId) {
-      return await ctx.db
+      const query = ctx.db
         .query("documents")
         .withIndex("by_organization_id", (q) =>
           q.eq("organizationId", organizationId)
-        )
-        .paginate(paginationOpts);
+        );
+
+      if (sortBy === "oldest") {
+        return await query.order("asc").paginate(paginationOpts);
+      } else {
+        return await query.order("desc").paginate(paginationOpts);
+      }
     }
 
-    return await ctx.db
+    const query = ctx.db
       .query("documents")
-      .withIndex("by_owner_id", (q) => q.eq("ownerId", user.subject))
-      .paginate(paginationOpts);
+      .withIndex("by_owner_id", (q) => q.eq("ownerId", user.subject));
+
+    if (sortBy === "oldest") {
+      return await query.order("asc").paginate(paginationOpts);
+    } else {
+      return await query.order("desc").paginate(paginationOpts);
+    }
   },
 });
 

@@ -1,19 +1,37 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Navbar } from "./navbar";
 import { TemplatesGallery } from "./templates-gallery";
 
 import { api } from "../../../convex/_generated/api";
 import { usePaginatedQuery } from "convex/react";
-import { DocumentsView } from "./documents-view";
+import { DocumentsView, SortOption } from "./documents-view";
 import { useSearchParam } from "@/hooks/use-search-param";
 
 const Home = () => {
   const [search] = useSearchParam();
+
+  // Load saved sort option from localStorage, default to newest
+  const [sortOption, setSortOption] = useState<SortOption>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("documents-sort-option");
+      return (saved as SortOption) || "newest";
+    }
+    return "newest";
+  });
+
+  // Save sort option to localStorage when it changes
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("documents-sort-option", sortOption);
+    }
+  }, [sortOption]);
+
   const { results, status, loadMore } = usePaginatedQuery(
     api.documents.get,
-    { search },
-    { initialNumItems: 5 }
+    { search, sortBy: sortOption },
+    { initialNumItems: 6 }
   );
 
   return (
@@ -28,6 +46,8 @@ const Home = () => {
           loadMore={loadMore}
           status={status}
           search={search}
+          sortOption={sortOption}
+          onSortOptionChange={setSortOption}
         />
       </div>
     </div>

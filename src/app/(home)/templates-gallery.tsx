@@ -24,10 +24,10 @@ export const TemplatesGallery = () => {
     setIsCreating(true);
     create({ title, initialContent })
       .catch(() => {
-        toast.error("Something went wrong");
+        toast.error("出错了，请稍后再试");
       })
       .then((documentId) => {
-        toast.success("Document created");
+        toast.success("创建成功");
         router.push(`/documents/${documentId}`);
       })
       .finally(() => {

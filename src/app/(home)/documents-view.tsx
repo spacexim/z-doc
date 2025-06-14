@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { PaginationStatus, useQuery } from "convex/react";
+import { ChevronDown, ArrowUpDown, Calendar, FileText } from "lucide-react";
 
 import {
   Table,
@@ -11,6 +12,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Doc } from "../../../convex/_generated/dataModel";
 import { DocumentRow } from "./docuement-row";
 import { DocumentCard } from "./document-card";
@@ -18,11 +25,15 @@ import { ViewToggle, ViewMode } from "./view-toggle";
 import { Button } from "@/components/ui/button";
 import { api } from "../../../convex/_generated/api";
 
+export type SortOption = "newest" | "oldest" | "name-asc" | "name-desc";
+
 interface DocumentsViewProps {
   documents: Doc<"documents">[] | undefined;
   loadMore: (numItems: number) => void;
   status: PaginationStatus;
   search?: string;
+  sortOption: SortOption;
+  onSortOptionChange: (option: SortOption) => void;
 }
 
 export const DocumentsView = ({
@@ -30,6 +41,8 @@ export const DocumentsView = ({
   loadMore,
   status,
   search,
+  sortOption,
+  onSortOptionChange,
 }: DocumentsViewProps) => {
   // Get total document count
   const totalCount = useQuery(api.documents.getCount, { search });
@@ -49,6 +62,21 @@ export const DocumentsView = ({
       localStorage.setItem("documents-view-mode", viewMode);
     }
   }, [viewMode]);
+
+  const getSortOptionLabel = (option: SortOption) => {
+    switch (option) {
+      case "newest":
+        return "最新创建";
+      case "oldest":
+        return "最早创建";
+      case "name-asc":
+        return "名称 A-Z";
+      case "name-desc":
+        return "名称 Z-A";
+      default:
+        return "最新创建";
+    }
+  };
 
   const renderLoadingState = () => {
     if (viewMode === "list") {
@@ -119,7 +147,7 @@ export const DocumentsView = ({
             <TableHead className="hidden md:table-cell">共享</TableHead>
             <TableHead className="hidden md:table-cell">创建时间</TableHead>
           </TableRow>
-        </TableHeader>
+        </TableHeader>{" "}
         {documents?.length === 0 ? (
           <TableBody>
             <TableRow className="hover:bg-transparent">
@@ -146,6 +174,7 @@ export const DocumentsView = ({
 
   const renderGridView = () => (
     <div className="w-full">
+      {" "}
       {documents?.length === 0 ? (
         <div className="text-center text-muted-foreground py-12">
           <div className="mb-4">
@@ -178,7 +207,57 @@ export const DocumentsView = ({
             {totalCount !== undefined ? `${totalCount} 个文档` : ""}
           </p>
         </div>
-        <ViewToggle viewMode={viewMode} onViewModeChange={setViewMode} />
+        <div className="flex items-center gap-3">
+          {/* Sort Selector */}
+          <DropdownMenu>
+            {" "}
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-9 flex items-center gap-2"
+              >
+                <ArrowUpDown className="h-4 w-4" />
+                {getSortOptionLabel(sortOption)}
+                <ChevronDown className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              {" "}
+              <DropdownMenuItem
+                onClick={() => onSortOptionChange("newest")}
+                className="flex items-center gap-2"
+              >
+                <Calendar className="h-4 w-4" />
+                最新创建
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => onSortOptionChange("oldest")}
+                className="flex items-center gap-2"
+              >
+                <Calendar className="h-4 w-4" />
+                最早创建
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => onSortOptionChange("name-asc")}
+                className="flex items-center gap-2"
+              >
+                <FileText className="h-4 w-4" />
+                名称 A-Z
+              </DropdownMenuItem>{" "}
+              <DropdownMenuItem
+                onClick={() => onSortOptionChange("name-desc")}
+                className="flex items-center gap-2"
+              >
+                <FileText className="h-4 w-4" />
+                名称 Z-A
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* View Toggle */}
+          <ViewToggle viewMode={viewMode} onViewModeChange={setViewMode} />
+        </div>
       </div>
       {documents === undefined ? (
         renderLoadingState()
@@ -189,7 +268,7 @@ export const DocumentsView = ({
         <Button
           variant={"ghost"}
           size={"sm"}
-          onClick={() => loadMore(5)}
+          onClick={() => loadMore(6)}
           disabled={status !== "CanLoadMore"}
           className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
         >

@@ -1,0 +1,46 @@
+<svg width="200" height="250" viewBox="0 0 200 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="20" y="20" width="160" height="210" rx="8" fill="white" stroke="#e5e7eb" stroke-width="2"/>
+  
+  <!-- Invoice header -->
+  <rect x="30" y="30" width="60" height="16" rx="4" fill="#dc2626"/>
+  <text x="60" y="42" font-family="Arial" font-size="12" fill="white" font-weight="bold" text-anchor="middle">INVOICE</text>
+  
+  <!-- Invoice number and date -->
+  <rect x="120" y="30" width="50" height="8" rx="4" fill="#f3f4f6"/>
+  <rect x="120" y="42" width="40" height="6" rx="3" fill="#f3f4f6"/>
+  
+  <!-- Bill to section -->
+  <rect x="30" y="60" width="40" height="8" rx="4" fill="#6b7280"/>
+  <rect x="30" y="73" width="80" height="6" rx="3" fill="#f3f4f6"/>
+  <rect x="30" y="82" width="70" height="6" rx="3" fill="#f3f4f6"/>
+  <rect x="30" y="91" width="75" height="6" rx="3" fill="#f3f4f6"/>
+  
+  <!-- Invoice table -->
+  <rect x="30" y="110" width="140" height="80" rx="4" fill="#f9fafb" stroke="#e5e7eb"/>
+  
+  <!-- Table header -->
+  <rect x="30" y="110" width="140" height="15" rx="4" fill="#f3f4f6"/>
+  <line x1="80" y1="110" x2="80" y2="190" stroke="#e5e7eb"/>
+  <line x1="110" y1="110" x2="110" y2="190" stroke="#e5e7eb"/>
+  <line x1="140" y1="110" x2="140" y2="190" stroke="#e5e7eb"/>
+  
+  <!-- Table rows -->
+  <line x1="30" y1="135" x2="170" y2="135" stroke="#e5e7eb"/>
+  <line x1="30" y1="155" x2="170" y2="155" stroke="#e5e7eb"/>
+  <line x1="30" y1="175" x2="170" y2="175" stroke="#e5e7eb"/>
+  
+  <!-- Sample data -->
+  <text x="55" y="120" font-family="Arial" font-size="7" fill="#374151" font-weight="bold" text-anchor="middle">Description</text>
+  <text x="95" y="120" font-family="Arial" font-size="7" fill="#374151" font-weight="bold" text-anchor="middle">Qty</text>
+  <text x="125" y="120" font-family="Arial" font-size="7" fill="#374151" font-weight="bold" text-anchor="middle">Rate</text>
+  <text x="155" y="120" font-family="Arial" font-size="7" fill="#374151" font-weight="bold" text-anchor="middle">Amount</text>
+  
+  <!-- Total section -->
+  <rect x="120" y="200" width="50" height="25" rx="4" fill="#f3f4f6" stroke="#d1d5db"/>
+  <text x="135" y="212" font-family="Arial" font-size="8" fill="#374151" font-weight="bold" text-anchor="middle">Total</text>
+  <text x="145" y="220" font-family="Arial" font-size="10" fill="#dc2626" font-weight="bold" text-anchor="middle">$XXX</text>
+  
+  <!-- Dollar sign icon -->
+  <circle cx="155" cy="45" r="8" fill="#dcfce7" stroke="#22c55e"/>
+  <text x="155" y="49" font-family="Arial" font-size="10" fill="#15803d" font-weight="bold" text-anchor="middle">$</text>
+</svg>

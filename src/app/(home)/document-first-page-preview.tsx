@@ -96,7 +96,7 @@ export const DocumentFirstPagePreview = ({
   }, [content, title]);
   return (
     <div
-      className={`w-full h-full bg-white rounded overflow-hidden border border-gray-200 ${className}`}
+      className={`w-full h-full bg-white rounded-t-xl overflow-hidden border border-gray-200/60 ${className}`}
     >
       <div className="w-full h-full overflow-hidden bg-white flex items-start justify-center">
         <div
@@ -107,11 +107,12 @@ export const DocumentFirstPagePreview = ({
           }}
         >
           <div
-            className="bg-white p-8 text-sm leading-relaxed text-gray-900 shadow-sm border"
+            className="bg-white p-8 text-sm leading-relaxed text-gray-900 shadow-sm border border-gray-100"
             style={{
               width: "816px", // 标准A4宽度
               minHeight: "1054px", // 标准A4高度
               fontFamily: "Arial, sans-serif",
+              borderRadius: "8px",
             }}
           >
             {previewContent ? (
