@@ -1,7 +1,5 @@
-
-
 <div align="center">
-  <img src="/public/logot.svg" alt="Z-Doc Logo" width="400" />
+  <img src="/public/logot.svg" alt="LiveDocs Logo" width="400" />
   <h3>现代化协作文档编辑平台</h3>
   <!-- 技术栈徽章 -->
   <p>
@@ -20,11 +18,9 @@
 
 ## 📝 项目简介
 
-Z-Doc 是一个实时协作文档编辑平台，为团队和个人提供类似 Google Docs 的使用体验。通过 Z-Doc，用户可以创建、编辑和共享各种文档，并支持多人实时协作，完美适合团队项目、学术研究或个人知识管理。
+LiveDocs 是一个实时协作文档编辑平台，为团队和个人提供类似 Google Docs 的使用体验。通过 LiveDocs，用户可以创建、编辑和共享各种文档，并支持多人实时协作，完美适合团队项目、学术研究或个人知识管理。
 
 ### ✨ 核心特性
-
-
 
 - 📄 **多种文档模板**：包括空白文档、商务信函、项目提案、简历等
 - 👥 **实时协作**：多人同时编辑，光标实时显示
@@ -46,8 +42,8 @@ Z-Doc 是一个实时协作文档编辑平台，为团队和个人提供类似 G
 1. 克隆仓库
 
 ```bash
-git clone https://github.com/spacexim/z-doc.git
-cd z-doc
+git clone https://github.com/spacexim/LiveDocs.git
+cd LiveDocs
 ```
 
 2. 安装依赖
@@ -114,8 +110,6 @@ npx convex dev
 
 ## 💻 技术栈
 
-
-
 - **前端框架**: [Next.js 15](https://nextjs.org/) (React 19)
 - **样式**: [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
 - **编辑器**: [TipTap](https://tiptap.dev/) 富文本编辑器
@@ -127,7 +121,7 @@ npx convex dev
 ## 📁 项目结构
 
 ```
-z-doc/
+LiveDocs/
 ├── convex/            # Convex 数据模型和函数
 ├── public/            # 静态资源
 ├── src/
@@ -150,7 +144,7 @@ z-doc/
 
 ### 文档编辑器
 
-Z-Doc 文档编辑器基于 TipTap，提供丰富的编辑功能：
+LiveDocs 文档编辑器基于 TipTap，提供丰富的编辑功能：
 
 - 文本样式（粗体、斜体、下划线等）
 - 段落格式（对齐、行高等）
@@ -216,7 +210,7 @@ Z-Doc 文档编辑器基于 TipTap，提供丰富的编辑功能：
 
 如有任何问题或建议，请通过以下方式联系我们：
 
-- GitHub Issues: [https://github.com/spacexim/z-doc/issues](https://github.com/spacexim/z-doc/issues)
+- GitHub Issues: [https://github.com/spacexim/LiveDocs/issues](https://github.com/spacexim/LiveDocs/issues)
 - 电子邮件: [zu_yao@outlook.com](mailto:zu_yao@outlook.com)
 
 ---

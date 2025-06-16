@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/logo.svg",
   },
-  title: "Z-Doc",
+  title: "LiveDocs",
   description: "Google Doc clone",
 };
 
