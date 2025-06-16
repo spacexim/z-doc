@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="/public/logot.svg" alt="LiveDocs Logo" width="400" />
+  <img src="/public/logo-title.svg" alt="LiveDocs Logo" width="400" />
   <h3>现代化协作文档编辑平台</h3>
   <!-- 技术栈徽章 -->
   <p>
